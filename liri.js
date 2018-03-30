@@ -114,7 +114,6 @@ function omdbSearch(movie) {
             console.log("Plot: " + body.Plot)
             console.log("Actors: " + body.Actors)
     
-            //adds text to log.txt
             fs.appendFile('log.txt', "Title: " + body.Title, function (e) {
                     if (e) { console.log(e) }
                 })
