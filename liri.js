@@ -11,8 +11,8 @@ var keys = require('./keys.js')
 var Spotify = require('node-spotify-api')
 var spotify = new Spotify(keys.spotify);
 var request = require('request')
-var twitter = require('twitter')
-var client = new twitter(keys.twitterKeys)
+var Twitter = require('twitter')
+var client = new Twitter(keys.twitterKeys)
 var fs = require('fs')
 
 var arg = process.argv[2]
@@ -53,8 +53,12 @@ function twitterSearch() {
                 console.log("-----------------------")
                 
                 //adds text to log.txt file
-                fs.appendFile('log.txt', "@f0rkm3: " + tweets[i].text + " Created At: " + date.substring(0, 19))
-                fs.appendFile('log.txt', "-----------------------")
+                fs.appendFile('log.txt', "@f0rkm3: " + tweets[i].text + " Created At: " + date.substring(0, 19), function (e) {
+                    if (e) { console.log(e) }
+                })
+                fs.appendFile('log.txt', "-----------------------", function (e) {
+                    if (e) { console.log(e) }
+                })
             }
         } else {
             console.log('Error: ' + error)
@@ -63,9 +67,9 @@ function twitterSearch() {
 }
 
 function spotifySearch(song) {
-    var song = tracks.
+    var song = process.argv[3]
     spotify.search({ type: 'track', query: song}, function(e, d) {
-        if(!error) {
+        if(!e) {
             for(var i = 0; i < d.tracks.items.length; i++) {
                 var songData = d.tracks.items[i]
                 console.log("Artist: " + songData.artists[0].name)
@@ -74,14 +78,24 @@ function spotifySearch(song) {
                 console.log("Album: " + songData.album.name)
                 console.log("-----------------------")
                 
-                fs.appendFile('log.txt', songData.artists[0].name)
-                fs.appendFile('log.txt', songData.name)
-                fs.appendFile('log.txt', songData.preview_url)
-                fs.appendFile('log.txt', songData.album.name)
-                fs.appendFile('log.txt', "-----------------------")
+                fs.appendFile('log.txt', songData.artists[0].name, function (e) {
+                    if (e) { console.log(e) }
+                })
+                fs.appendFile('log.txt', songData.name, function (e) {
+                    if (e) { console.log(e) }
+                })
+                fs.appendFile('log.txt', songData.preview_url, function (e) {
+                    if (e) { console.log(e) }
+                })
+                fs.appendFile('log.txt', songData.album.name, function (e) {
+                    if (e) { console.log(e) }
+                })
+                fs.appendFile('log.txt', "-----------------------", function (e) {
+                    if (e) { console.log(e) }
+                })
             }
         } else {
-            console.log('Error: ' + error)
+            console.log('Error: ' + e)
         }
     })
 }
@@ -101,11 +115,21 @@ function omdbSearch(movie) {
             console.log("Actors: " + body.Actors)
     
             //adds text to log.txt
-            fs.appendFile('log.txt', "Title: " + body.Title)
-            fs.appendFile('log.txt', "Release Year: " + body.Year)
-            fs.appendFile('log.txt', "IMdB Rating: " + body.imdbRating)
-            fs.appendFile('log.txt', "Plot: " + body.Plot)
-            fs.appendFile('log.txt', "Actors: " + body.Actors)
+            fs.appendFile('log.txt', "Title: " + body.Title, function (e) {
+                    if (e) { console.log(e) }
+                })
+            fs.appendFile('log.txt', "Release Year: " + body.Year, function (e) {
+                    if (e) { console.log(e) }
+                })
+            fs.appendFile('log.txt', "IMdB Rating: " + body.imdbRating, function (e) {
+                    if (e) { console.log(e) }
+                })
+            fs.appendFile('log.txt', "Plot: " + body.Plot, function (e) {
+                    if (e) { console.log(e) }
+                })
+            fs.appendFile('log.txt', "Actors: " + body.Actors, function (e) {
+                    if (e) { console.log(e) }
+                })
   
         } else {
             console.log('Error: ' + error)
@@ -118,7 +142,7 @@ function doTheThing() {
     fs.readFile('random.txt', "utf8", function(e, d) {
         var txt = d.split(',')
         spotifySong(txt[1])
-    command = console.log(command)
+    // command = console.log(command)
     })
   }
   
