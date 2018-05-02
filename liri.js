@@ -102,10 +102,10 @@ function spotifySearch(song) {
 
 
 function omdbSearch(movie) {
-    var omdbURL = 'http://www.omdbapi.com/?t=' + movie + '&plot=short&tomatoes=true'
+    var omdbURL = 'http://www.omdbapi.com/?t=' + movie + '&plot=short&tomatoes=true&apikey=e095351'
   
     request(omdbURL, function (error, response, body){
-        if(!error && response.statusCode == 200){
+        if(!error){
             var body = JSON.parse(body)
   
             console.log("Title: " + body.Title)
